@@ -1,4 +1,6 @@
 using MVC_Shop.DMO;
+using MVC_Shop.Repository;
+using MVC_Shop.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -6,6 +8,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddScoped(typeof(AdventureWorks2019Context));
+builder.Services.AddScoped<IProductSubCategoryRepository, ProductSubCategoryRepository>();
+builder.Services.AddScoped<IProductCategoryService, ProductCategoryService>();	
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
