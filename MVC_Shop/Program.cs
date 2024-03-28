@@ -1,8 +1,11 @@
+using MVC_Shop.DMO;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddScoped(typeof(AdventureWorks2019Context));
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
