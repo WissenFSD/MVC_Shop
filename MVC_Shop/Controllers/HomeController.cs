@@ -1,21 +1,24 @@
 using Microsoft.AspNetCore.Mvc;
 using MVC_Shop.Models;
+using MVC_Shop.Models.ViewModel;
+using MVC_Shop.Service;
 using System.Diagnostics;
 
 namespace MVC_Shop.Controllers
 {
 	public class HomeController : Controller
 	{
-		private readonly ILogger<HomeController> _logger;
-
-		public HomeController(ILogger<HomeController> logger)
+		private IProductCategoryService _productSubCategoryService;
+		public HomeController(IProductCategoryService  productSubCategoryService)
 		{
-			_logger = logger;
+			_productSubCategoryService = productSubCategoryService;
 		}
 
 		public IActionResult Index()
 		{
-			return View();
+			PscViewModel model = new PscViewModel();
+			model.PSCModel = _productSubCategoryService.GetAll();
+			return View(model);
 		}
 
 		public IActionResult Privacy()
