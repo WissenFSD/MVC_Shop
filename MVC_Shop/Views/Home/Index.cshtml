@@ -96,13 +96,13 @@
 		$(".btnSepet").click(function () {
 
 			var productId = $(this).attr("product");
-
+			debugger;
 			$.post({
 
-				type='POST',
-				dataType='JSON',
-				url="https://localhost:7293/Home/AddSepet",
-				data={ id: productId },
+				type:'POST',
+				dataType:'json',
+				url:'https://localhost:7293/Home/AddSepet',
+				data:{ id: productId },
 				success: function (response) {
 
 					var sepetValue = parseInt($(".sepet").html());
