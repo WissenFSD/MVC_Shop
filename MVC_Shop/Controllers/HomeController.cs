@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using MVC_Shop.Models;
 using MVC_Shop.Models.ViewModel;
 using MVC_Shop.Service;
+using Newtonsoft.Json;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 
@@ -11,10 +12,10 @@ namespace MVC_Shop.Controllers
 	{
 		private IProductCategoryService _productSubCategoryService;
 		private IProductService _productService;
-		public HomeController(IProductCategoryService  productSubCategoryService,IProductService productService)
+		public HomeController(IProductCategoryService productSubCategoryService, IProductService productService)
 		{
 			_productSubCategoryService = productSubCategoryService;
-			_productService	= productService;
+			_productService = productService;
 		}
 
 		public IActionResult Index()
@@ -27,11 +28,49 @@ namespace MVC_Shop.Controllers
 		{
 
 			PscViewModel model = new PscViewModel();
-			model.PSCModel= _productSubCategoryService.GetAll();
-			model.Products= _productService.GetProductBySubCategoryId(categoryId);
+			model.PSCModel = _productSubCategoryService.GetAll();
+			model.Products = _productService.GetProductBySubCategoryId(categoryId);
 
 
-			return View("Index",model);
+			return View("Index", model);
+		}
+
+		public IActionResult Sepet()
+		{
+
+			return View();
+		}
+
+		[HttpPost]
+		public IActionResult AddSepet(int id)
+		{
+			try
+			{
+				if (HttpContext.Session.GetString("SepetSession") != null)
+				{
+					// ikinci kez session'i kullanýyorsak
+					var sepetList = JsonConvert.DeserializeObject<List<int>>(HttpContext.Session.GetString("sepet"));
+					sepetList.Add(id);
+
+					var jsonSepet = JsonConvert.SerializeObject(sepetList);
+					HttpContext.Session.SetString("sepet", jsonSepet);
+				}
+				else
+				{
+					// Ýlk kez kullanýyorsak
+					List<int> sepets = new List<int> { id };
+					var jsonSepet = JsonConvert.SerializeObject(sepets);
+					HttpContext.Session.SetString("sepet", jsonSepet);
+
+				}
+				return Json(true);
+
+			}
+			catch {
+
+				return Json(false);
+			}
+		
 		}
 		public IActionResult Privacy()
 		{
