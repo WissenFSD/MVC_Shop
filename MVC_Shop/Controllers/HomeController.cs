@@ -3,15 +3,18 @@ using MVC_Shop.Models;
 using MVC_Shop.Models.ViewModel;
 using MVC_Shop.Service;
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 
 namespace MVC_Shop.Controllers
 {
 	public class HomeController : Controller
 	{
 		private IProductCategoryService _productSubCategoryService;
-		public HomeController(IProductCategoryService  productSubCategoryService)
+		private IProductService _productService;
+		public HomeController(IProductCategoryService  productSubCategoryService,IProductService productService)
 		{
 			_productSubCategoryService = productSubCategoryService;
+			_productService	= productService;
 		}
 
 		public IActionResult Index()
@@ -23,7 +26,12 @@ namespace MVC_Shop.Controllers
 		public IActionResult ProductFilter(int categoryId)
 		{
 
-			return View("Index",);
+			PscViewModel model = new PscViewModel();
+			model.PSCModel= _productSubCategoryService.GetAll();
+			model.Products= _productService.GetProductBySubCategoryId(categoryId);
+
+
+			return View("Index",model);
 		}
 		public IActionResult Privacy()
 		{

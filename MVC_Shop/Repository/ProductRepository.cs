@@ -5,19 +5,26 @@ namespace MVC_Shop.Repository
 {
 	public interface IProductRepository
 	{
-
+		public List<ProductDTO> GetProductBySubCategoryId(int subCategoryId);
 	}
-	public class ProductRepository
+	public class ProductRepository:IProductRepository
 	{
 		private AdventureWorks2019Context _context;
-        public ProductRepository(AdventureWorks2019Context context)
-        {
-            _context= context;
-        }
+		public ProductRepository(AdventureWorks2019Context context)
+		{
+			_context = context;
+		}
 		public List<ProductDTO> GetProductBySubCategoryId(int subCategoryId)
 		{
+			var result = _context.Products.Where(s => s.ProductSubcategoryId == subCategoryId).Select(k => new ProductDTO()
+			{
+				Id = k.ProductId,
+				Name = k.Name,
+				Price = k.ListPrice
+			}).ToList();
 
+			return result;
 		}
 
-    }
+	}
 }

@@ -11,6 +11,8 @@ builder.Services.AddScoped(typeof(AdventureWorks2019Context));
 builder.Services.AddScoped<IProductSubCategoryRepository, ProductSubCategoryRepository>();
 builder.Services.AddScoped<IProductCategoryService, ProductCategoryService>();	
 
+builder.Services.AddScoped<IProductService,ProductService>();
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
