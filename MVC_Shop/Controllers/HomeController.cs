@@ -20,7 +20,11 @@ namespace MVC_Shop.Controllers
 			model.PSCModel = _productSubCategoryService.GetAll();
 			return View(model);
 		}
+		public IActionResult ProductFilter(int categoryId)
+		{
 
+			return View("Index",);
+		}
 		public IActionResult Privacy()
 		{
 			return View();
