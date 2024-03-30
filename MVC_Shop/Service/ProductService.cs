@@ -10,8 +10,8 @@ namespace MVC_Shop.Service
 	}
 	public class ProductService:IProductService
 	{
-        private ProductRepository _productRepository;
-        public ProductService(ProductRepository productRepository)
+        private IProductRepository _productRepository;
+        public ProductService(IProductRepository productRepository)
         {
 			_productRepository= productRepository;
 
