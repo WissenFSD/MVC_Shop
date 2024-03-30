@@ -22,13 +22,19 @@
 					</ul>
 				</li>
 			</ul>
-			<form class="d-flex">
-				<button class="btn btn-outline-dark" type="submit">
-					<i class="bi-cart-fill me-1"></i>
-					Sepet
-					<span class="badge bg-dark text-white ms-1 rounded-pill sepet">0</span>
-				</button>
-			</form>
+			<div class="d-flex">
+
+				<a href="https://localhost:7293/Home/Sepet">
+					<button class="btn btn-outline-dark">
+
+						<i class="bi-cart-fill me-1"></i>
+						Sepet
+
+
+						<span class="badge bg-dark text-white ms-1 rounded-pill sepet">0</span>
+					</button>
+				</a>
+			</div>
 		</div>
 	</div>
 </nav>
@@ -89,7 +95,7 @@
 <!-- Bootstrap core JS-->
 
 
- <script>
+	<script>
 
 	$(document).ready(function () {
 
@@ -99,10 +105,10 @@
 			debugger;
 			$.post({
 
-				type:'POST',
-				dataType:'json',
-				url:'https://localhost:7293/Home/AddSepet',
-				data:{ id: productId },
+				type: 'POST',
+				dataType: 'json',
+				url: 'https://localhost:7293/Home/AddSepet',
+				data: { id: productId },
 				success: function (response) {
 
 					var sepetValue = parseInt($(".sepet").html());
