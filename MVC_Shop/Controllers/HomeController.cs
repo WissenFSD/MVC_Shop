@@ -12,10 +12,14 @@ namespace MVC_Shop.Controllers
 	{
 		private IProductCategoryService _productSubCategoryService;
 		private IProductService _productService;
-		public HomeController(IProductCategoryService productSubCategoryService, IProductService productService)
+		private IBasketService _basketService;
+		public HomeController(IProductCategoryService productSubCategoryService,
+			IProductService productService,
+			IBasketService basketService)
 		{
 			_productSubCategoryService = productSubCategoryService;
 			_productService = productService;
+			_basketService = basketService;
 		}
 
 		public IActionResult Index()
@@ -55,7 +59,19 @@ namespace MVC_Shop.Controllers
 		public IActionResult Sepet()
 		{
 
-			return View();
+
+			// Önce sepette olan ürünlerin id deðerlerini yakalayalým
+			if (HttpContext.Session.Keys.Count() > 0)
+			{
+
+				var jsonBasket = HttpContext.Session.GetString("sepet");
+
+				List<int> basketIds = JsonConvert.DeserializeObject<List<int>>(jsonBasket);
+				var baskets = _basketService.GetProductById(basketIds);
+				return View(baskets);
+			}
+			return RedirectToAction("Index");
+			
 		}
 
 		[HttpPost]
@@ -63,7 +79,7 @@ namespace MVC_Shop.Controllers
 		{
 			try
 			{
-				if (HttpContext.Session != null && HttpContext.Session.Keys.Count()>0)
+				if (HttpContext.Session != null && HttpContext.Session.Keys.Count() > 0)
 				{
 					// ikinci kez session'i kullanýyorsak
 					var sepetList = JsonConvert.DeserializeObject<List<int>>(HttpContext.Session.GetString("sepet"));

@@ -1,9 +1,10 @@
-﻿@using MVC_Shop.Models.ViewModel
-@model PscViewModel
+﻿@using MVC_Shop.Models.DTO
+
+@model List<BasketDTO>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
 	<div class="container px-4 px-lg-5">
-		<a class="navbar-brand" href="#!">Start Bootstrap</a>
+		<a class="navbar-brand" href="#!">Sepet Sayfası</a>
 		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
 			<ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
@@ -16,8 +17,8 @@
 <header class="bg-dark py-5">
 	<div class="container px-4 px-lg-5 my-5">
 		<div class="text-center text-white">
-			<h1 class="display-4 fw-bolder">Shop in style</h1>
-			<p class="lead fw-normal text-white-50 mb-0">With this shop hompeage template</p>
+			<h1 class="display-4 fw-bolder">Sepet Sayfası</h1>
+			<p class="lead fw-normal text-white-50 mb-0">Bol Bol Alışveriş</p>
 		</div>
 	</div>
 </header>
@@ -26,10 +27,10 @@
 	<div class="container px-4 px-lg-5 mt-5">
 		<div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
 
-			@if (Model.Products != null)
+			@if (Model != null)
 			{
 
-				@foreach (var item in Model.Products)
+				@foreach (var item in Model)
 				{
 					<div class="col mb-5">
 						<div class="card h-100">
@@ -48,7 +49,9 @@
 									<h5 class="fw-bolder">@item.Name</h5>
 									<!-- Product price-->
 									$@item.Price
-								</div>>
+									<hr />
+									Stock : @item.StockQuantity
+								</div>
 							</div>
 							<!-- Product actions-->
 							<div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
@@ -67,5 +70,3 @@
 	<div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2023</p></div>
 </footer>
 <!-- Bootstrap core JS-->
-
-

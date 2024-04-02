@@ -12,6 +12,8 @@ builder.Services.AddScoped<IProductSubCategoryRepository, ProductSubCategoryRepo
 builder.Services.AddScoped<IProductCategoryService, ProductCategoryService>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IProductService,ProductService>();
+builder.Services.AddScoped<IBasketService, BasketService>();
+builder.Services.AddScoped<IBasketRepository, BasketRepository>();
 
 
 builder.Services.AddSession(option =>
