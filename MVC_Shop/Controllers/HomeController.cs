@@ -27,6 +27,15 @@ namespace MVC_Shop.Controllers
 			PscViewModel model = new PscViewModel();
 			model.PSCModel = _productSubCategoryService.GetAll();
 
+			//Redirect olduðunda sepetteki ürünleri görmek için sayfa açýlýrkende session deðerini alalým
+			if (!string.IsNullOrEmpty(HttpContext.Session.GetString("sepet")))
+			{
+				string json = HttpContext.Session.GetString("sepet");
+				var sessionObject = JsonConvert.DeserializeObject<List<int>>(json);
+
+				//Session içerisindeki ürün adedini bulup, view modele mapledik. 
+				model.SessionCount = sessionObject.Count;
+			}
 
 
 			return View(model);
