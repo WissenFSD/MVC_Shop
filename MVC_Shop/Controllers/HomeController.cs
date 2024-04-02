@@ -22,6 +22,9 @@ namespace MVC_Shop.Controllers
 		{
 			PscViewModel model = new PscViewModel();
 			model.PSCModel = _productSubCategoryService.GetAll();
+
+
+
 			return View(model);
 		}
 		public IActionResult ProductFilter(int categoryId)
@@ -30,6 +33,20 @@ namespace MVC_Shop.Controllers
 			PscViewModel model = new PscViewModel();
 			model.PSCModel = _productSubCategoryService.GetAll();
 			model.Products = _productService.GetProductBySubCategoryId(categoryId);
+
+
+			//Sayfa refresh olduðunda, sepetteki ürün miktarý sýfýrlanýyor. Düzenleyelim 
+
+			//Sepette ürün varsa ürün sayýsýný bulalým
+
+			if (!string.IsNullOrEmpty(HttpContext.Session.GetString("sepet")))
+			{
+				string json = HttpContext.Session.GetString("sepet");
+				var sessionObject = JsonConvert.DeserializeObject<List<int>>(json);
+
+				//Session içerisindeki ürün adedini bulup, view modele mapledik. 
+				model.SessionCount = sessionObject.Count;
+			}
 
 
 			return View("Index", model);
@@ -46,7 +63,7 @@ namespace MVC_Shop.Controllers
 		{
 			try
 			{
-				if (HttpContext.Session!= null)
+				if (HttpContext.Session != null && HttpContext.Session.Keys.Count()>0)
 				{
 					// ikinci kez session'i kullanýyorsak
 					var sepetList = JsonConvert.DeserializeObject<List<int>>(HttpContext.Session.GetString("sepet"));
@@ -66,11 +83,12 @@ namespace MVC_Shop.Controllers
 				return Json(true);
 
 			}
-			catch {
+			catch
+			{
 
 				return Json(false);
 			}
-		
+
 		}
 		public IActionResult Privacy()
 		{

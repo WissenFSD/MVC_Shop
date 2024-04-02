@@ -16,7 +16,7 @@ builder.Services.AddScoped<IProductService,ProductService>();
 
 builder.Services.AddSession(option =>
 {
-	   option.IdleTimeout=TimeSpan.FromDays(1);
+	   option.IdleTimeout=TimeSpan.FromDays(10);
 
 });
 
