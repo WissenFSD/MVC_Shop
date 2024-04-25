@@ -1,6 +1,6 @@
 ﻿@using MVC_Shop.Models.DTO
 
-@model List<BasketDTO>
+@model List<GroupBasket>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
 	<div class="container px-4 px-lg-5">
@@ -37,7 +37,7 @@
 
 							<!-- Product image-->
 							@{
-								var base64 = Convert.ToBase64String(item.Photo);
+								var base64 = Convert.ToBase64String(item.Product.Photo);
 								var imgSrc = string.Format("data:image/gif;base64,{0}", base64);
 
 							}
@@ -46,16 +46,16 @@
 							<div class="card-body p-4">
 								<div class="text-center">
 									<!-- Product name-->
-									<h5 class="fw-bolder">@item.Name</h5>
+									<h5 class="fw-bolder">@item.Product.Name</h5>
 									<!-- Product price-->
-									$@item.Price
+									$@item.Product.Price
 									<hr />
-									Stock : @item.StockQuantity
+									Quantity : @item.Quantity
 								</div>
 							</div>
 							<!-- Product actions-->
 							<div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-								<div class="text-center"><a product="@item.Id" class="btnSepet btn btn-outline-dark mt-auto">Sepete Ekle</a></div>
+								<div class="text-center"><a product="@item.Product.Id" class="btnSepet btn btn-outline-dark mt-auto">Sepete Ekle</a></div>
 							</div>
 						</div>
 					</div>

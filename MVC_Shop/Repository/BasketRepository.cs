@@ -7,7 +7,7 @@ namespace MVC_Shop.Repository
 	public interface IBasketRepository
 	{
 
-		public List<BasketDTO> GetProductById(List<int> ids);
+		public List<GroupBasket> GetProductById(List<int> ids);
 	}
 	public class BasketRepository : IBasketRepository
 	{
@@ -27,7 +27,7 @@ namespace MVC_Shop.Repository
             }).FirstOrDefault();
 			return result;
         }
-		public List<BasketDTO> GetProductById(List<int> ids)
+		public List<GroupBasket> GetProductById(List<int> ids)
 		{
 			//var result = _context.Products.Include(m => m.ProductProductPhotos).ThenInclude(k => k.ProductPhoto).Where(s => ids.Any(k=>k==s.ProductId)).Select(k => new BasketDTO()
 			//{
@@ -46,7 +46,7 @@ namespace MVC_Shop.Repository
 			
 			}).ToList();
 
-			return new List<BasketDTO>();
+			return groupResult;
 
 		}
 	}
