@@ -77,6 +77,8 @@ namespace MVC_Shop.Controllers
 
 				List<int> basketIds = JsonConvert.DeserializeObject<List<int>>(jsonBasket);
 				var baskets = _basketService.GetProductById(basketIds);
+
+				var groupResult = baskets.GroupBy(s => s.Id).Select(k => new { k.Key, Count = k.Count() });
 				return View(baskets);
 			}
 			return RedirectToAction("Index");
