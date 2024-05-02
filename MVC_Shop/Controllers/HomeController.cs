@@ -59,6 +59,14 @@ namespace MVC_Shop.Controllers
 
 				//Session içerisindeki ürün adedini bulup, view modele mapledik. 
 				model.SessionCount = sessionObject.Count;
+
+				// sayfa yüklendiðinde, sepet kýsmýnda toplam tutar yazsýn
+
+				if (!string.IsNullOrEmpty(HttpContext.Session.GetString("Total")))
+				{
+					decimal total = Convert.ToDecimal(HttpContext.Session.GetString("Total"));
+					model.Total = total;
+				}
 			}
 
 
@@ -78,11 +86,20 @@ namespace MVC_Shop.Controllers
 				List<int> basketIds = JsonConvert.DeserializeObject<List<int>>(jsonBasket);
 				var baskets = _basketService.GetProductById(basketIds);
 
-				
+
 				return View(baskets);
 			}
 			return RedirectToAction("Index");
-			
+
+		}
+
+		public IActionResult Pay()
+		{
+			// Sessiondan sepet verileri getiriliyor.
+			var sepetList = JsonConvert.DeserializeObject<List<int>>(HttpContext.Session.GetString("sepet"));
+			var result = _basketService.SetStock(sepetList);
+			//
+			return View();
 		}
 
 		[HttpPost]
@@ -111,12 +128,16 @@ namespace MVC_Shop.Controllers
 
 					total = _basketService.GetTotalPrice(sepets);
 
+
 				}
+
+				// Hesaplanan tutarý sesion'a at 
+				HttpContext.Session.SetString("Total", total.ToString());
 
 				return Json(new
 				{
 					Result = true,
-					Total =total
+					Total = total
 				});
 
 			}

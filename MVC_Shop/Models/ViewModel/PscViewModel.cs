@@ -8,6 +8,7 @@ namespace MVC_Shop.Models.ViewModel
 		public List<ProductDTO> Products { get; set; }
 
 		public int SessionCount { get; set; }
+        public decimal Total { get; set; }
 
-	}
+    }
 }

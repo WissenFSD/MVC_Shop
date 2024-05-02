@@ -8,6 +8,7 @@ namespace MVC_Shop.Service
 	{
 		public List<GroupBasket> GetProductById(List<int> ids);
 		public decimal GetTotalPrice(List<int> productIds);
+		public bool SetStock(List<int> ids);
 	}
 	public class BasketService : IBasketService
 	{
@@ -25,6 +26,11 @@ namespace MVC_Shop.Service
 		public List<GroupBasket> GetProductById(List<int> ids)
 		{
 			var result = _basketRepository.GetProductById(ids);
+			return result;
+		}
+		public bool SetStock(List<int> ids)
+		{
+			var result =_basketRepository.SetStock(ids);
 			return result;
 		}
 	}
