@@ -8,6 +8,7 @@ namespace MVC_Shop.Repository
 	{
 
 		public List<GroupBasket> GetProductById(List<int> ids);
+		public decimal GetTotalPrice(List<int> productIds);
 	}
 	public class BasketRepository : IBasketRepository
 	{
@@ -15,6 +16,11 @@ namespace MVC_Shop.Repository
 		public BasketRepository(AdventureWorks2019Context context)
 		{
 			_context = context;
+		}
+		public decimal GetTotalPrice(List<int> productIds)
+		{
+			decimal totalPrice=_context.Products.Where(s => productIds.Contains(s.ProductId)).Select(k => k.ListPrice * productIds.Count).FirstOrDefault();
+			return totalPrice;
 		}
 		public BasketDTO GetProductById(int id)
 		{

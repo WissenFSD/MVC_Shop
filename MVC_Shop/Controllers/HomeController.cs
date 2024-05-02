@@ -88,6 +88,7 @@ namespace MVC_Shop.Controllers
 		[HttpPost]
 		public IActionResult AddSepet(int id)
 		{
+			decimal total = 0;
 			try
 			{
 				if (HttpContext.Session != null && HttpContext.Session.Keys.Count() > 0)
@@ -98,6 +99,8 @@ namespace MVC_Shop.Controllers
 
 					var jsonSepet = JsonConvert.SerializeObject(sepetList);
 					HttpContext.Session.SetString("sepet", jsonSepet);
+
+					total = _basketService.GetTotalPrice(sepetList);
 				}
 				else
 				{
@@ -106,8 +109,15 @@ namespace MVC_Shop.Controllers
 					var jsonSepet = JsonConvert.SerializeObject(sepets);
 					HttpContext.Session.SetString("sepet", jsonSepet);
 
+					total = _basketService.GetTotalPrice(sepets);
+
 				}
-				return Json(true);
+
+				return Json(new
+				{
+					Result = true,
+					Total =total
+				});
 
 			}
 			catch

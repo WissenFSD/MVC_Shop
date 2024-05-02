@@ -7,6 +7,7 @@ namespace MVC_Shop.Service
 	public interface IBasketService
 	{
 		public List<GroupBasket> GetProductById(List<int> ids);
+		public decimal GetTotalPrice(List<int> productIds);
 	}
 	public class BasketService : IBasketService
 	{
@@ -15,7 +16,13 @@ namespace MVC_Shop.Service
         {
             _basketRepository = basketRepository;
         }
-        public List<GroupBasket> GetProductById(List<int> ids)
+		public decimal GetTotalPrice(List<int> productIds)
+		{
+			var result = _basketRepository.GetTotalPrice(productIds);
+			return result;
+		}
+
+		public List<GroupBasket> GetProductById(List<int> ids)
 		{
 			var result = _basketRepository.GetProductById(ids);
 			return result;

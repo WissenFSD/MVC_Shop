@@ -33,6 +33,8 @@
 						<!--Action tarafında, session'dan ilgili değeri alıp, view model aracılığı ile buraya bastık-->
 
 						<span class="badge bg-dark text-white ms-1 rounded-pill sepet">@Model.SessionCount</span>
+
+						Total : $<b class="total"></b>
 					</button>
 				</a>
 			</div>
@@ -111,9 +113,12 @@
 				data: { id: productId },
 				success: function (response) {
 
+					debugger;
 					var sepetValue = parseInt($(".sepet").html());
 					sepetValue++;
 					$(".sepet").html(sepetValue);
+
+					$(".total").text(response.total);
 
 				},
 				error: function (response) {
